@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>登陆成功</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <link rel="stylesheet" href="https://www.layuicdn.com/layui/css/layui.css"  media="all">
+  <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
+</head>
+<body>
+<h2>{{data.username}}登陆成功</h2>
+<table class="layui-hide" id="test" lay-filter="test"></table>
+
+<script type="text/html" id="toolbarDemo">
+  <div class="layui-btn-container">
+    <button class="layui-btn layui-btn-sm" lay-event="getCheckData">获取选中行数据</button>
+  </div>
+</script>
+
+
+<script src="https://www.layuicdn.com/layui/layui.js" charset="utf-8"></script>
+<!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
+
+<script>
+layui.use('table', function(){
+  var table = layui.table;
+  table.render({
+    elem: '#test'
+    ,url:'/admin/table/users/'
+    ,toolbar: '#toolbarDemo'
+    ,cols: [[
+      {type:'radio'}
+      ,{field:'city', width:180, title: '城市', sort: true}
+      ,{field:'username', width:180, title: '用户名'}
+      ,{field:'sex', width:180, title: '性别', sort: true}
+      ,{field:'name', width:180, title: '姓名'}
+    ]]
+    ,page: true
+  });
+
+  //头工具栏事件
+  table.on('toolbar(test)', function(obj){
+    var checkStatus = table.checkStatus(obj.config.id); //获取选中行状态
+    switch(obj.event){
+      case 'getCheckData':
+        var data = checkStatus.data;  //获取选中行数据
+        layer.alert(JSON.stringify(data));
+      break;
+    };
+  });
+});
+</script>
+
+</body>
+</html>

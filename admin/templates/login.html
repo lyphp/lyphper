@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <title>登陆页面</title>
+  <link href="http://g.alicdn.com/sj/dpl/1.5.1/css/sui.min.css" rel="stylesheet">
+  <script type="text/javascript" src="http://g.alicdn.com/sj/lib/jquery/dist/jquery.min.js"></script>
+  <script type="text/javascript" src="http://g.alicdn.com/sj/dpl/1.5.1/js/sui.min.js"></script>
+</head>
+<body>
+  <div class="sui-container">
+    <form class="sui-form form-horizontal" id="form5">
+      <div class="control-group">
+        <label class="control-label">条线：</label>
+        <div class="controls">
+          <label data-toggle="radio" class="radio-pretty inline checked">
+            <input type="radio" checked="checked" name="radio"><span>传统营销</span>
+          </label>
+          <label data-toggle="radio" class="radio-pretty inline">
+            <input type="radio" name="radio"><span>服务营销</span>
+          </label>
+          <label data-toggle="radio" class="radio-pretty inline">
+            <input type="radio" name="radio"><span>顾问营销</span>
+          </label>
+        </div>
+      </div>
+
+
+      <div class="control-group">
+        <label class="control-label">用户名：</label>
+        <div class="controls">
+          <input type="text" class="input-xlarge" name="username">
+          <div class="sui-msg msg-tips msg-naked">
+            <div class="msg-con">提示信息，这里输入用户名</div>
+            <s class="msg-icon"></s>
+          </div>
+        </div>
+      </div>
+
+      <div class="control-group">
+        <label class="control-label">密码：</label>
+        <div class="controls">
+          <input type="password" class="input-xlarge" name="password">
+          <div class="sui-msg msg-tips msg-naked">
+            <div class="msg-con">提示信息，这里输入密码</div>
+            <s class="msg-icon"></s>
+          </div>
+        </div>
+      </div>
+
+      <div class="control-group">
+        <label class="control-label"></label>
+        <div class="controls">
+          <button type="submit" class="sui-btn btn-primary" id="tj">登陆</button>
+          <button type="reset" class="sui-btn">重置</button>
+        </div>
+      </div>
+    </form>
+
+  </div>
+</body>
+<script>
+  $("#form5").validate({
+    rules: {
+      username: {
+        required: true,
+        minlength: 2,
+        maxlength: 10
+      },
+      password: {
+        required: true,
+        minlength: 2,
+        maxlength: 12
+      },
+      repassword: {
+        required: true,
+        prefill: 'password',
+        match: 'password'
+      },
+      sanwei: {
+        required: function($input) {
+          var value = $input.val()
+          var $form = $input.parents("form")
+          var gender = $form.find("[name='gender']:checked").val()
+          if (gender == 2 && !value) {
+            return false
+          }
+          return true
+        }
+      },
+      gender: {
+        required: true
+      }
+    },
+    messages: {
+      username: "亲，你连登陆号都不记了吗",
+      password: '必须输入密码',
+    },
+    success: function() {
+      $("#form5").attr("method","post");
+      $("#form5").attr("action","login_check");
+    }
+  })
+</script>
+</html>
